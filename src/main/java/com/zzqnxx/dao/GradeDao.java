@@ -18,14 +18,14 @@ public interface GradeDao {
      * @param id
      * @return
      */
-    int deleteGrade(int id);
+    boolean deleteGrade(int id);
 
     /**
      * 更新学生成绩
      * @param grade
      * @return
      */
-    int updateGrade(Grade grade);
+    boolean updateGrade(Grade grade);
 
     /**
      * 查询指定学生的成绩记录数量
