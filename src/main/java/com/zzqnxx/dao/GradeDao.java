@@ -39,7 +39,7 @@ public interface GradeDao {
      * @param sId
      * @return
      */
-    List<Grade> queryBySId(int sId, int offset, int limit);
+    List<Grade> queryBySId(int sId, int page, int num);
 
     /**
      * 查询指定试卷的成绩记录数量
@@ -51,12 +51,12 @@ public interface GradeDao {
     /**
      * 查询指定试卷的成绩
      * @param paperId
-     * @param offset
-     * @param limit
+     * @param page
+     * @param num
      * @return
      */
-    List<Grade> queryByPaperId(int paperId, int offset,
-                               int limit);
+    List<Grade> queryByPaperId(int paperId, int page,
+                               int num);
 
     /**
      * 模糊查询指定学生指定试卷的成绩记录数量
@@ -72,11 +72,11 @@ public interface GradeDao {
      * @param paperId
      * @param studentId
      * @param studentName
-     * @param offset
-     * @param limit
+     * @param page
+     * @param num
      * @return
      */
-    List<Grade> queryByPaperId2StuId2StuName(int paperId, String studentId, String studentName, int offset, int limit);
+    List<Grade> queryByPaperId2StuId2StuName(int paperId, String studentId, String studentName, int page, int num);
 
     /**
      * 根据考生主键ID集合和试卷主键ID集合获取成绩数量
@@ -90,9 +90,9 @@ public interface GradeDao {
      * 根据考生主键ID集合和试卷主键ID集合获取成绩
      * @param sIds
      * @param paperIds
-     * @param offset
-     * @param limit
+     * @param page
+     * @param num
      * @return
      */
-    List<Grade> queryBySIdsAndPIds(List<Integer> sIds, List<Integer> paperIds, int offset, int limit);
+    List<Grade> queryBySIdsAndPIds(List<Integer> sIds, List<Integer> paperIds, int page, int num);
 }
