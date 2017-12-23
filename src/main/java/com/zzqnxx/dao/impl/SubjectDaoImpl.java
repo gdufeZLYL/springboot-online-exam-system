@@ -141,6 +141,7 @@ public class SubjectDaoImpl implements SubjectDao {
             subject.setParse(resultSet.getString("parse"));
             subject.setTitleType(resultSet.getInt("title_type"));
             subject.setPaperId(resultSet.getInt("paper_id"));
+            return subject;
         } catch (Exception e) {
             LOG.info(e.getMessage(), e);
         }

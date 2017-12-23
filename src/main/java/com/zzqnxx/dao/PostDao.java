@@ -18,7 +18,7 @@ public interface PostDao {
      * @param post
      * @return
      */
-    int updatePost(Post post);
+    boolean updatePost(Post post);
 
     /**
      * 获取所有公告列表
