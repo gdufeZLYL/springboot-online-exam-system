@@ -12,6 +12,7 @@ public class Student {
     private String profession;
     private String className;
     private Date createTime;
+    private int level;  //0表示学生,1表示教师,2表示管理员
 
     public int getId() {
         return id;
@@ -83,6 +84,14 @@ public class Student {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 
     @Override

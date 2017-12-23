@@ -8,6 +8,7 @@ public class Teacher {
     private String password;
     private Date createTime;
     private String teacherName;
+    private int level;  //0表示学生,1表示教师,2表示管理员
 
     public int getId() {
         return id;
@@ -47,6 +48,14 @@ public class Teacher {
 
     public void setTeacherName(String teacherName) {
         this.teacherName = teacherName;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 
     @Override
