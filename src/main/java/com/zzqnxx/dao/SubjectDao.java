@@ -18,14 +18,14 @@ public interface SubjectDao {
      * @param id
      * @return
      */
-    int deleteSubject(int id);
+    boolean deleteSubject(int id);
 
     /**
      * 更新试题信息
      * @param subject
      * @return
      */
-    int updateSubject(Subject subject);
+    boolean updateSubject(Subject subject);
 
     /**
      * 获取试题信息数量
@@ -35,11 +35,11 @@ public interface SubjectDao {
 
     /**
      * 分页获取试题信息
-     * @param offset
-     * @param limit
+     * @param page
+     * @param num
      * @return
      */
-    List<Subject> queryAll(int offset, int limit);
+    List<Subject> queryAll(int page, int num);
 
     /**
      * 获取试题信息(By paperId and titleType)
@@ -58,12 +58,12 @@ public interface SubjectDao {
     /**
      * 分页模糊查询匹配题目的试题
      * @param title
-     * @param offset
-     * @param limit
+     * @param page
+     * @param num
      * @return
      */
-    List<Subject> queryByTitle(String title, int offset,
-                               int limit);
+    List<Subject> queryByTitle(String title, int page,
+                               int num);
 
     /**
      * 分页模糊查询匹配题目的试题数量
@@ -75,10 +75,10 @@ public interface SubjectDao {
     /**
      * 分页模糊查询匹配题目的试题
      * @param title
-     * @param offset
-     * @param limit
+     * @param page
+     * @param num
      * @return
      */
     List<Subject> queryByTitleAndPaperName(String title, String paperName,
-                                           int offset, int limit);
+                                           int page, int num);
 }
