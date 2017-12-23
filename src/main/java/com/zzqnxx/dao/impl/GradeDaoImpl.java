@@ -72,9 +72,7 @@ public class GradeDaoImpl implements GradeDao {
 
     @Override
     public List<Grade> queryBySId(int sId, int page, int num) {
-        StringBuilder sb = new StringBuilder(String.format("select a.id, a.s_id, a.paper_id, a.score, " +
-                "a.single_score, a.mul_score, a.other_score, a.create_time, " +
-                "a.answer_json, b.paper_name from %s a, %s b " +
+        StringBuilder sb = new StringBuilder(String.format("select a.*, b.paper_name from %s a, %s b " +
                 "where s_id = ? and a.paper_id = b.id ", Penguin.TABLE_EXAM_GRADE, Penguin.TABLE_EXAM_PAPER));
         sb.append("order by a.create_time desc limit " + num * (page - 1) + "," + num);
         List<Object> param = new ArrayList<>();
@@ -104,8 +102,7 @@ public class GradeDaoImpl implements GradeDao {
 
     @Override
     public List<Grade> queryByPaperId(int paperId, int page, int num) {
-        StringBuilder sb = new StringBuilder(String.format("select a.id, a.s_id, a.paper_id, a.score, " +
-                "a.single_score, a.mul_score, a.other_score, a.create_time, a.answer_json, " +
+        StringBuilder sb = new StringBuilder(String.format("select a.*, " +
                 "b.student_name ,b.profession from %s a, %s b " +
                 "where a.paper_id = ? and a.s_id = b.id ", Penguin.TABLE_EXAM_GRADE, Penguin.TABLE_EXAM_STUDENT));
         sb.append("order by a.create_time desc limit " + num * (page - 1) + "," + num);
@@ -138,9 +135,7 @@ public class GradeDaoImpl implements GradeDao {
 
     @Override
     public List<Grade> queryByPaperId2StuId2StuName(int paperId, String studentId, String studentName, int page, int num) {
-        StringBuilder sb = new StringBuilder(String.format("select a.id, a.s_id, a.paper_id, " +
-                "a.score, a.single_score, a.mul_score, a.other_score, a.create_time, " +
-                "a.answer_json, b.student_name, b.profession from %s a, %s b " +
+        StringBuilder sb = new StringBuilder(String.format("select a.*, b.student_name, b.profession from %s a, %s b " +
                         "where a.paper_id = ? AND a.s_id = b.id ",
                 Penguin.TABLE_EXAM_GRADE, Penguin.TABLE_EXAM_STUDENT));
         List<Object> param = new ArrayList<>();
