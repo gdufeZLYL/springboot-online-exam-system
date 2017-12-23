@@ -16,7 +16,7 @@ public interface TeacherDao {
      * @param id
      * @return
      */
-    int deleteTeacher(int id);
+    boolean deleteTeacher(int id);
 
     /**
      * 更新教师信息
@@ -24,7 +24,7 @@ public interface TeacherDao {
      * @param password
      * @return
      */
-    int updateTeacher(int id, String password);
+    boolean updateTeacher(int id, String password);
 
     /**
      * 查询教师(By teacherId and password)
