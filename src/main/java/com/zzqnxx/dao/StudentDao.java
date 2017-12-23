@@ -17,7 +17,7 @@ public interface StudentDao {
      * @param id
      * @return
      */
-    int deleteStudent(int id);
+    boolean deleteStudent(int id);
 
     /**
      * 更新学生信息
@@ -25,14 +25,14 @@ public interface StudentDao {
      * @param password
      * @return
      */
-    int updatePassword(int id, String password);
+    boolean updatePassword(int id, String password);
 
     /**
      * 更新考生信息
      * @param student
      * @return
      */
-    int updateStudent(Student student);
+    boolean updateStudent(Student student);
 
     /**
      * 查询学生(By studentId and password)
@@ -63,8 +63,8 @@ public interface StudentDao {
      * @return
      */
     List<Student> queryStuByStuIdAndStuNameAndClassName(String studentId, String studentName,
-                                                        String className, int offset,
-                                                        int limit);
+                                                        String className, int page,
+                                                        int num);
 
     /**
      * 根据学号,姓名,班级名称获取学生信息列表
