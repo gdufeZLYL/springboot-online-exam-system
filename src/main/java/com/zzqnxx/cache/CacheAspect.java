@@ -2,6 +2,7 @@ package com.zzqnxx.cache;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
+import com.sun.org.apache.regexp.internal.RE;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -40,7 +41,21 @@ public class CacheAspect {
         for (Object arg : pjp.getArgs()) {
             stringBuilder.append(SPLIT).append(arg);
         }
-        return stringBuilder.append(SPLIT).append(localKey()).toString();
+//        return stringBuilder.append(SPLIT).append(localKey()).toString();
+        return stringBuilder.append(SPLIT).append(localKey(pjp)).toString();
+    }
+
+    private String localKey(ProceedingJoinPoint pjp) throws Exception {
+        MethodSignature signature = (MethodSignature) pjp.getSignature();
+        Method method = pjp.getTarget()
+                .getClass()
+                .getMethod(signature.getMethod().getName(),
+                        signature.getMethod().getParameterTypes());
+        QexzCacheResult annotation = method.getAnnotation(QexzCacheResult.class);
+        if (annotation.strategy() == QexzCacheResult.STRATEGY.ACCOUNT) {
+            return localKey();
+        }
+        return "";
     }
 
     private boolean expired(ProceedingJoinPoint pjp, String key) throws NoSuchMethodException {
