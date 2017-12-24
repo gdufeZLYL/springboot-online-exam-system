@@ -35,45 +35,45 @@ public interface StudentDao {
     boolean updateStudent(Student student);
 
     /**
-     * 查询学生(By studentId and password)
-     * @param studentId
+     * 查询学生
+     * @param username
      * @param password
      * @return
      */
-    Student selectStudentByStuIdAndPwd(String studentId, String password);
+    Student queryStudentByUsernameAndPassword(String username, String password);
 
     /**
-     * 查询学生(By studentId)
-     * @param studentId
+     * 查询学生
+     * @param username
      * @return
      */
-    Student selectStudentByStuId(String studentId);
+    Student queryStudentByUsername(String username);
 
     /**
      * 获取学生数量
      * @return
      */
-    int queryAllCount(String studentId, String studentName, String className);
+    int queryAllCount(String username, String name, String className);
 
     /**
      * 分页获取学生列表
-     * @param studentId
-     * @param studentName
+     * @param username
+     * @param name
      * @param className
      * @return
      */
-    List<Student> queryStuByStuIdAndStuNameAndClassName(String studentId, String studentName,
+    List<Student> queryStudentByUsernameAndNameAndClassName(String username, String name,
                                                         String className, int page,
                                                         int num);
 
     /**
      * 根据学号,姓名,班级名称获取学生信息列表
-     * @param studentId
-     * @param studentName
+     * @param username
+     * @param name
      * @param className
      * @return
      */
-    List<Student> queryByStuIdAndStuNameAndClassName(String studentId,
-                                                     String studentName,
+    List<Student> queryStudentByUsernameAndNameAndClassName(String username,
+                                                     String name,
                                                      String className);
 }

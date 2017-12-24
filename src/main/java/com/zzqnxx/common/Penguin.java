@@ -9,6 +9,7 @@ public class Penguin {
     public final static String TABLE_EXAM_STUDENT = "t_exam_student";
     public final static String TABLE_EXAM_SUBJECT = "t_exam_subject";
     public final static String TABLE_EXAM_TEACHER = "t_exam_teacher";
+    public final static String TABLE_EXAM_ADMIN = "t_exam_admin";
 
     // Session
     //当前登录信息
@@ -23,10 +24,12 @@ public class Penguin {
     //管理员
     public final static String IDENTITY_ADMIN = "admin";
 
-    //考生
+    //学生
     public final static String LEVEL_STUDENT = "student";
     //教师
     public final static String LEVER_TEACHER = "teacher";
+    //管理员
+    public final static String LEVER_ADMIN = "admin";
 
     //单选题分数
     public final static int SINGLE_SCORE = 2;

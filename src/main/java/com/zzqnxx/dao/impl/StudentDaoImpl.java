@@ -27,9 +27,9 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public int insertStudent(Student student) {
         StringBuilder sb = new StringBuilder(String.format("insert into %s " +
-                "(student_id, student_name, gender, id_card, password, profession, class_name) " +
+                "(username, name, gender, id_card, password, profession, class_name) " +
                 "values (?, ?, ?, ?, ?, ?, ?)", Penguin.TABLE_EXAM_STUDENT));
-        int id = jdbcTemplate.update(sb.toString(), student.getStudentId(), student.getStudentName(),
+        int id = jdbcTemplate.update(sb.toString(), student.getUsername(), student.getName(),
                 student.getGender(), student.getIdCard(), student.getPassword(), student.getProfession(),
                 student.getClassName());
         return id;
@@ -52,42 +52,43 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public boolean updateStudent(Student student) {
         StringBuilder sb = new StringBuilder(String.format("update %s " +
-                "set student_id = ?, student_name = ?, gender = ?, id_card = ?, " +
+                "set username = ?, name = ?, gender = ?, id_card = ?, " +
                 "password = ?, profession = ?, class_name = ? where id = ? ", Penguin.TABLE_EXAM_STUDENT));
-        return jdbcTemplate.update(sb.toString(), student.getStudentId(), student.getStudentName(),
+        return jdbcTemplate.update(sb.toString(), student.getUsername(), student.getName(),
                 student.getGender(), student.getIdCard(), student.getPassword(),
                 student.getProfession(), student.getClassName(), student.getId()) > 0;
     }
 
     @Override
-    public Student selectStudentByStuIdAndPwd(String studentId, String password) {
+    public Student queryStudentByUsernameAndPassword(String username, String password) {
         StringBuilder sb = new StringBuilder(String.format("select * " +
-                "from %s where student_id = ? and password = ? ", Penguin.TABLE_EXAM_STUDENT));
+                "from %s where username = ? and password = ? ", Penguin.TABLE_EXAM_STUDENT));
         Student student = jdbcTemplate.queryForObject(sb.toString(),
-                new Object[]{studentId, password}, new StudentRowMapper());
+                new Object[]{username, password}, new StudentRowMapper());
         return student;
     }
 
     @Override
-    public Student selectStudentByStuId(String studentId) {
-        StringBuilder sb = new StringBuilder(String.format("select * from %s where student_id = ? ", Penguin.TABLE_EXAM_STUDENT));
+    public Student queryStudentByUsername(String username) {
+        StringBuilder sb = new StringBuilder(String.format("select * from %s " +
+                "where username = ? ", Penguin.TABLE_EXAM_STUDENT));
         Student student = jdbcTemplate.queryForObject(sb.toString(),
-                new Object[]{studentId}, new StudentRowMapper());
+                new Object[]{username}, new StudentRowMapper());
         return student;
     }
 
     @Override
-    public int queryAllCount(String studentId, String studentName, String className) {
+    public int queryAllCount(String username, String name, String className) {
         StringBuilder sb = new StringBuilder(String.format("select count(1) as count " +
                 "from %s where 1 = 1", Penguin.TABLE_EXAM_STUDENT));
         List<Object> param = new ArrayList<>();
-        if (StringUtils.isNotEmpty(studentId)) {
-            sb.append(" and student_id = ? ");
-            param.add(studentId);
+        if (StringUtils.isNotEmpty(username)) {
+            sb.append(" and username = ? ");
+            param.add(username);
         }
-        if (StringUtils.isNotEmpty(studentName)) {
-            sb.append(" and student_name like ? ");
-            param.add("%"+studentName+"%");
+        if (StringUtils.isNotEmpty(name)) {
+            sb.append(" and name like ? ");
+            param.add("%"+name+"%");
         }
         if (StringUtils.isNotEmpty(className)) {
             sb.append(" and class_name like ? ");
@@ -98,39 +99,39 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public List<Student> queryStuByStuIdAndStuNameAndClassName(String studentId, String studentName, String className, int page, int num) {
+    public List<Student> queryStudentByUsernameAndNameAndClassName(String username, String name, String className, int page, int num) {
         StringBuilder sb = new StringBuilder(String.format("select * " +
                 "from %s where 1 = 1", Penguin.TABLE_EXAM_STUDENT));
         List<Object> param = new ArrayList<>();
-        if (StringUtils.isNotEmpty(studentId)) {
-            sb.append(" and student_id = ? ");
-            param.add(studentId);
+        if (StringUtils.isNotEmpty(username)) {
+            sb.append(" and username = ? ");
+            param.add(username);
         }
-        if (StringUtils.isNotEmpty(studentName)) {
-            sb.append(" and student_name like ? ");
-            param.add("%"+studentName+"%");
+        if (StringUtils.isNotEmpty(name)) {
+            sb.append(" and name like ? ");
+            param.add("%"+name+"%");
         }
         if (StringUtils.isNotEmpty(className)) {
             sb.append(" and class_name like ? ");
             param.add("%"+className+"%");
         }
-        sb.append(" order by student_id limit "+num*(page-1)+", "+num);
+        sb.append(" order by username limit "+num*(page-1)+", "+num);
         List<Student> students = jdbcTemplate.query(sb.toString(), param.toArray(), new StudentRowMapper());
         return students;
     }
 
     @Override
-    public List<Student> queryByStuIdAndStuNameAndClassName(String studentId, String studentName, String className) {
+    public List<Student> queryStudentByUsernameAndNameAndClassName(String username, String name, String className) {
         StringBuilder sb = new StringBuilder(String.format("select * " +
                 "from %s where 1 = 1", Penguin.TABLE_EXAM_STUDENT));
         List<Object> param = new ArrayList<>();
-        if (StringUtils.isNotEmpty(studentId)) {
-            sb.append(" and student_id = ? ");
-            param.add(studentId);
+        if (StringUtils.isNotEmpty(username)) {
+            sb.append(" and username = ? ");
+            param.add(username);
         }
-        if (StringUtils.isNotEmpty(studentName)) {
-            sb.append(" and student_name like ? ");
-            param.add("%"+studentName+"%");
+        if (StringUtils.isNotEmpty(name)) {
+            sb.append(" and name like ? ");
+            param.add("%"+name+"%");
         }
         if (StringUtils.isNotEmpty(className)) {
             sb.append(" and class_name like ? ");
@@ -144,14 +145,15 @@ public class StudentDaoImpl implements StudentDao {
         try {
             Student student = new Student();
             student.setId(resultSet.getInt("id"));
-            student.setStudentId(resultSet.getString("student_id"));
-            student.setStudentName(resultSet.getString("student_name"));
+            student.setUsername(resultSet.getString("username"));
+            student.setName(resultSet.getString("name"));
             student.setGender(resultSet.getString("gender"));
             student.setIdCard(resultSet.getString("id_card"));
             student.setPassword(resultSet.getString("password"));
             student.setProfession(resultSet.getString("profession"));
             student.setClassName(resultSet.getString("class_name"));
             student.setCreateTime(resultSet.getTimestamp("create_time"));
+            student.setLevel(resultSet.getInt("level"));
             return student;
         } catch (Exception e) {
             LOG.info(e.getMessage(), e);
