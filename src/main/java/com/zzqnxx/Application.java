@@ -10,10 +10,10 @@ import org.springframework.core.env.Environment;
 import javax.sql.DataSource;
 
 @SpringBootApplication
-public class SpringbootOnlineExamSystemApplication {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringbootOnlineExamSystemApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 	@Autowired
